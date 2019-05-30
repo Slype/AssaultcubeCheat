@@ -257,9 +257,3 @@ namespace assaultcube_cheat_v2
         }
     }
 }
-
-/* Health example
-if (!assaultcube.addModule("ac_client.exe"))
-    exitProgram("Unable to locate DLL (ac_client.exe)");
-// ac_client.exe + 0x10F4F4 > 0xF8 = health
-*/
