@@ -68,7 +68,7 @@ namespace assaultcube_cheat_v2
             { "ammoSecondaryReserve",  0x0114 },
             { "ammoAkimbo", 0x015C },
             { "ammoGrenade", 0x0158 },
-            
+
         };
 
         // Address table
@@ -97,7 +97,7 @@ namespace assaultcube_cheat_v2
 
         // Calculate sum of offsets, from offset Table (overloads parent function)
         public int sumOffsets(params string[] addresses)
-        {            
+        {
             int total = 0;
             for (int i = 0; i < addresses.Length; i++)
             {
@@ -162,7 +162,7 @@ namespace assaultcube_cheat_v2
                 if(distance < nearestDistance && enemy.alive)
                 {
                     nearestEnemy = enemy;
-                    nearestDistance = distance;                    
+                    nearestDistance = distance;
                 }
             }
             return nearestEnemy;
@@ -221,12 +221,12 @@ namespace assaultcube_cheat_v2
         {
             Player nearestEnemy = findNearestEnemy();
             if (Player.Equals(nearestEnemy, player)) // No enemy was found
-                return;   
+                return;
             YawPitch newAngle = calculateYawPitch(nearestEnemy); // Calculate required yaw & pitch
             writeFloat(address("player") + offset("yaw"), (float)newAngle.yaw);
             writeFloat(address("player") + offset("pitch"), (float)newAngle.pitch);
         }
-        
+
         // Give everyone 1 hp
         public void giveNoHealth()
         {
@@ -254,6 +254,19 @@ namespace assaultcube_cheat_v2
         {
             if (readBool(address("player") + offset("crouching")))
                 jump();
+        }
+
+        // Teleports all alive enemies to infront of the player for easy kills
+        public void teleportEnemiesToScope()
+        {
+            playerCount = readInt32(sumOffsets("game", "playerCount"));
+            for(int i = 0;i < playerCount - 1; i++)
+            {
+                int enemyBase = readInt32(address("enemyList") + offset("enemyListNext") + (i * offset("enemyListNext")));
+                writeFloat(enemyBase + offset("posX"), player.x);
+                writeFloat(enemyBase + offset("posY"), player.y + 10);
+                writeFloat(enemyBase + offset("posZ"), player.z);
+            }
         }
     }
 }
