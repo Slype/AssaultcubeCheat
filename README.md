@@ -11,7 +11,7 @@ It comes with:
 - Continuous aimbot
 - Auto jump while crouched
 - Ability to give other players 1 hp
-
+- Ability to teleport all enemies to infront you
 ------
 
 It uses my own custom made class for reading memory addresses. 
